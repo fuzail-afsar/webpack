@@ -8,11 +8,25 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Development",
+      title: "Caching",
     }),
   ],
   output: {
-    filename: "[name].bundle.js",
+    filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"),
+    clean: true,
+  },
+  optimization: {
+    moduleIds: "deterministic", //prevent vendors hash from change
+    runtimeChunk: "single", //split common files code
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/, //spit vendors to separete files
+          name: "vendors",
+          chunks: "all",
+        },
+      },
+    },
   },
 };
