@@ -2,31 +2,18 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  mode: "development",
   entry: {
     index: "./src/index.js",
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Caching",
+      title: "Authoring Libararies",
     }),
   ],
   output: {
-    filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"),
+    filename: "webpack-numbers.js",
+    library: "webpackNumbers", //export libarary as global variable for access
     clean: true,
-  },
-  optimization: {
-    moduleIds: "deterministic", //prevent vendors hash from change
-    runtimeChunk: "single", //split common files code
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/, //spit vendors to separete files
-          name: "vendors",
-          chunks: "all",
-        },
-      },
-    },
   },
 };
